@@ -7,6 +7,7 @@ def index(request):
 def home(request):
     djtext = request.GET.get('text','fu')
     djremovepunc = request.GET.get('removepunc','0ff')
+    uparcase = request.GET.get('fullcap','off')
     if djremovepunc == 'on':
         punctuation = '''!()-[]{};:'",<>.?@#$%^&*_~'''
         analyzed = ""
@@ -14,6 +15,12 @@ def home(request):
             if char not in punctuation:
                 analyzed = analyzed + char
         param = {'purpose':'this is that', 'analyze_text': analyzed}
+        return render(request, "analyze.html",param)
+    elif uparcase == 'on':
+        analyzed = ''
+        for char in djtext:
+            analyzed =  analyzed + char.upper()
+        param = {'purpose':'Change to uppercase', 'analyze_text': analyzed}
         return render(request, "analyze.html",param)
     else:
         return HttpResponse("Error")

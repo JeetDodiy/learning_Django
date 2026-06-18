@@ -9,6 +9,8 @@ def home(request):
     djremovepunc = request.GET.get('removepunc','0ff')
     uparcase = request.GET.get('fullcap','off')
     newLineremove = request.GET.get('newlineremove' , 'off')
+    spaceRemover = request.GET.get('spaceRemover','off')
+    cherCounter = request.GET.get('cherCounter','off')
 
     if djremovepunc == 'on':
         punctuation = '''!()-[]{};:'",<>.?@#$%^&*_~'''
@@ -28,12 +30,26 @@ def home(request):
         analyzed = ''
         for char in djtext:
             if char != "\n":
-
                 analyzed = analyzed + char
         param = {'purpose': 'Remove new Line', 'analyze_text': analyzed}
         return render(request, "analyze.html", param)
+    elif spaceRemover == 'on':
+        analyzed = ''
+        for index , char in enumerate(djtext):
+            if djtext[index] == " " and djtext[index+1] == " ":
+                pass
+            else:
+                analyzed = analyzed + char
+        param = {'purpose': 'Remove space', 'analyze_text': analyzed}
+        return render(request, "analyze.html", param)
+    elif cherCounter == 'on':
+         analyzed = ('No. of characters given in the text are : ' + str(len(djtext)))
+         param = {'purpose': 'Count number of characters', 'analyze_text': analyzed}
+         return render(request, "analyze.html", param)
+
     else:
         return HttpResponse("Error")
+
 
 # def analyze(request):
 #     return render(request, "analyze.html")

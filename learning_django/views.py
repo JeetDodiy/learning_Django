@@ -28,6 +28,7 @@ def home(request):
         analyzed = ''
         for char in djtext:
             if char != "\n":
+
                 analyzed = analyzed + char
         param = {'purpose': 'Remove new Line', 'analyze_text': analyzed}
         return render(request, "analyze.html", param)

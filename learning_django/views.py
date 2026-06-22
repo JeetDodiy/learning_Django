@@ -21,20 +21,20 @@ def home(request):
             if char not in punctuation:
                 analyzed = analyzed + char
         param = {'purpose': 'this is that', 'analyze_text': analyzed}
-        return render(request, "analyze.html", param)
+        return render(request, "analyze2.html", param)
     elif uparcase == 'on':
         analyzed = ''
         for char in djtext:
             analyzed = analyzed + char.upper()
         param = {'purpose': 'Change to uppercase', 'analyze_text': analyzed}
-        return render(request, "analyze.html", param)
+        return render(request, "analyze2.html", param)
     elif newLineremove == 'on':
         analyzed = ''
         for char in djtext:
             if char != "\n":
                 analyzed = analyzed + char
         param = {'purpose': 'Remove new Line', 'analyze_text': analyzed}
-        return render(request, "analyze.html", param)
+        return render(request, "analyze2.html", param)
     elif spaceRemover == 'on':
         analyzed = ''
         for index, char in enumerate(djtext):
@@ -43,14 +43,14 @@ def home(request):
             else:
                 analyzed = analyzed + char
         param = {'purpose': 'Remove space', 'analyze_text': analyzed}
-        return render(request, "analyze.html", param)
+        return render(request, "analyze2.html", param)
     elif cherCounter == 'on':
         analyzed = ('No. of characters given in the text are : ' + str(len(djtext)))
         param = {'purpose': 'Count number of characters', 'analyze_text': analyzed}
-        return render(request, "analyze.html", param)
+        return render(request, "analyze2.html", param)
 
     else:
         return HttpResponse("Error")
 
 # def analyze(request):
-# return render(request, "analyze.html")
+# return render(request, "analyze21.html")

@@ -7,12 +7,12 @@ def index(request):
 
 
 def home(request):
-    djtext = request.GET.get('text', 'fu')
-    djremovepunc = request.GET.get('removepunc', '0ff')
-    uparcase = request.GET.get('fullcap', 'off')
-    newLineremove = request.GET.get('newlineremove', 'off')
-    spaceRemover = request.GET.get('spaceRemover', 'off')
-    cherCounter = request.GET.get('cherCounter', 'off')
+    djtext = request.POST.get('text', 'fu')
+    djremovepunc = request.POST.get('removepunc', '0ff')
+    uparcase = request.POST.get('fullcap', 'off')
+    newLineremove = request.POST.get('newlineremove', 'off')
+    spaceRemover = request.POST.get('spaceRemover', 'off')
+    cherCounter = request.POST.get('cherCounter', 'off')
 
     if djremovepunc == 'on':
         punctuation = '''!()-[]{};:'",<>.?@#$%^&*_~'''
@@ -21,21 +21,22 @@ def home(request):
             if char not in punctuation:
                 analyzed = analyzed + char
         param = {'purpose': 'this is that', 'analyze_text': analyzed}
-        return render(request, "analyze2.html", param)
-    elif uparcase == 'on':
+        djtext = analyzed
+    if uparcase == 'on':
         analyzed = ''
         for char in djtext:
             analyzed = analyzed + char.upper()
         param = {'purpose': 'Change to uppercase', 'analyze_text': analyzed}
-        return render(request, "analyze2.html", param)
-    elif newLineremove == 'on':
+        djtext = analyzed
+    if newLineremove == 'on':
         analyzed = ''
         for char in djtext:
-            if char != "\n":
+            if char != "\n" and char != "\r":
                 analyzed = analyzed + char
         param = {'purpose': 'Remove new Line', 'analyze_text': analyzed}
-        return render(request, "analyze2.html", param)
-    elif spaceRemover == 'on':
+        djtext = analyzed
+
+    if spaceRemover == 'on':
         analyzed = ''
         for index, char in enumerate(djtext):
             if djtext[index] == " " and djtext[index + 1] == " ":
@@ -43,14 +44,13 @@ def home(request):
             else:
                 analyzed = analyzed + char
         param = {'purpose': 'Remove space', 'analyze_text': analyzed}
-        return render(request, "analyze2.html", param)
-    elif cherCounter == 'on':
+        djtext = analyzed
+    if cherCounter == 'on':
         analyzed = ('No. of characters given in the text are : ' + str(len(djtext)))
         param = {'purpose': 'Count number of characters', 'analyze_text': analyzed}
-        return render(request, "analyze2.html", param)
-
-    else:
-        return HttpResponse("Error")
+    if (djremovepunc != 'on' and uparcase != 'on' and newLineremove != 'on' and spaceRemover != 'on'):
+        return render(request, "eror_404.html")
+    return render(request, "analyze2.html", param)
 
 # def analyze(request):
 # return render(request, "analyze21.html")

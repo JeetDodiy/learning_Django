@@ -40,7 +40,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <div class="container">
-    <form action='/home' method="get">
+    <form action='/home' method="post">  {% csrf_token %}
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Ayaya maja aave te nakh je baka:</label>
             <textarea class="form-control" name='text' id="exampleFormControlTextarea1" rows="10"></textarea>

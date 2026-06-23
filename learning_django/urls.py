@@ -24,4 +24,6 @@ urlpatterns = [
     path('index',index.index,name='index'),
     path('about_us', index.about_us_url, name='about_us'),
     path('about', index.about_url, name='about_url'),
+    path('error_404', index.error_404, name='error_404'),
+
 ]
